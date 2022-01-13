@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="hrm_common" />
         <module name="hrm_company" />
-        <module name="hrm_common_model" />
       </profile>
     </annotationProcessing>
   </component>
