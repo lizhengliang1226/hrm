@@ -18,9 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @Date 2022/1/12-9:36
  */
 @SpringBootApplication(scanBasePackages = "com.hrm")
-//jpa注解的扫描
 @EntityScan(value = "com.hrm.domain.company")
-@EnableSwagger2
 public class CompanyApplication {
     public static void main(String[] args) {
         SpringApplication.run(CompanyApplication.class, args);
@@ -31,16 +29,5 @@ public class CompanyApplication {
         return new IdWorker();
     }
 
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .paths(PathSelectors.any())
-                .build();
-    }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("企业管理微服务API").description("企业管理CRUD").version("1.0").build();
-    }
 }

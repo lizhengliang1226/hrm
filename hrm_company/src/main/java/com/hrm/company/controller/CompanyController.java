@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequestMapping("company")
-@Api(value = "企业管理接口",tags = "企业管理")
+@Api(tags = "企业管理")
 public class CompanyController {
 
     private CompanyService companyService;
@@ -34,7 +34,6 @@ public class CompanyController {
     @PostMapping()
     @ApiOperation(value = "保存企业")
     public Result save(@RequestBody Company company) {
-        System.out.println(company);
         return companyService.add(company);
     }
 
