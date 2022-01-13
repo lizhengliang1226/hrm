@@ -9,8 +9,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="hrm_common" />
         <module name="hrm_company" />
+        <module name="hrm_common_model" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hrm_common" target="1.8" />
+      <module name="hrm_common_model" target="1.8" />
+      <module name="hrm_company" target="1.8" />
+      <module name="hrm_parent" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
