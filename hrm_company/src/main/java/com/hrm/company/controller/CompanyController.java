@@ -8,8 +8,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
- * @Description
+ * @Description 企业管理控制器
  * @Author LZL
  * @Date 2022/1/12-10:44
  */
@@ -26,60 +28,44 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    /**
-     * 保存企业
-     * @param company
-     * @return
-     */
     @PostMapping()
     @ApiOperation(value = "保存企业")
     public Result save(@RequestBody Company company) {
-        return companyService.add(company);
+        companyService.add(company);
+        return Result.SUCCESS();
     }
 
-    /**
-     * 根据id更新企业
-     * @param id
-     * @param company
-     * @return
-     */
     @PutMapping("{id}")
     @ApiOperation(value = "更新企业")
     public Result update(@PathVariable(value = "id") String id, @RequestBody Company company) {
         company.setId(id);
-        return companyService.update(company);
+       companyService.update(company);
+        return Result.SUCCESS();
     }
 
-    /**
-     * 根据id删除企业
-     * @param id
-     * @return
-     */
     @DeleteMapping("{id}")
-    @ApiOperation(value = "删除企业")
+    @ApiOperation(value = "根据id删除企业")
     public Result delete(@PathVariable(value = "id") String id) {
-        return companyService.delete(id);
+         companyService.delete(id);
+        return Result.SUCCESS();
     }
 
-    /**
-     * 根据id查找企业
-     * @param id
-     * @return
-     */
     @GetMapping("{id}")
     @ApiOperation(value = "根据ID查找企业")
     public Result findById(@PathVariable(value = "id") String id) {
-        return companyService.findById(id);
+        final Company company = companyService.findById(id);
+        Result<Company> result = Result.SUCCESS();
+        result.setData(company);
+        return result;
     }
 
-    /**
-     * 查找全部企业
-     * @return
-     */
     @GetMapping()
     @ApiOperation(value = "获取企业列表")
     public Result findAll() {
-        return companyService.findAll();
+        final List<Company> all = companyService.findAll();
+        Result<List<Company>> result = Result.SUCCESS();
+        result.setData(all);
+        return result;
     }
 
 }
