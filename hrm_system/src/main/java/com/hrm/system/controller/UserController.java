@@ -38,7 +38,6 @@ public class UserController extends BaseController {
         //设置保存的企业id，目前使用固定值1，以后会解决
         user.setCompanyId(companyId);
         user.setCompanyName(companyName);
-        System.out.println(user);
         userService.save(user);
         return Result.SUCCESS();
     }
@@ -67,7 +66,7 @@ public class UserController extends BaseController {
 
     @GetMapping("user")
     @ApiOperation(value = "获取某个企业的用户列表")
-    public Result findAll(@RequestBody Map map) {
+    public Result findAll(@RequestParam Map map) {
         //暂时都用1企业，之后会改
         map.put("companyId",companyId);
         final Page<User> all = userService.findAll(map);

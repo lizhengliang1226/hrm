@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
  */
 public class BaseService<T> {
     /**
-     * 查询属于同一家企业的某些信息，比如部门，用户
+     * 查询属于同一家企业的某些信息，比如部门，用户,角色
      * @param companyId
      * @return
      */
