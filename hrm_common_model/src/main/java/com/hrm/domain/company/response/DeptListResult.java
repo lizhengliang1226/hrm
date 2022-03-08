@@ -19,7 +19,8 @@ import java.util.List;
 public class DeptListResult {
     private String companyId;
     private String companyName;
-    private String companyManager; //公司联系人
+    //公司联系人
+    private String companyManager;
     private List<Department> depts;
     public DeptListResult(Company company,List depts){
         this.companyId = company.getId();
