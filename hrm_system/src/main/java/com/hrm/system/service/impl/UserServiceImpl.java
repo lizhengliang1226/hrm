@@ -28,10 +28,12 @@ import java.util.Map;
  * @Date 2022/3/8-20:34
  */
 @Service
-public class UserServiceImpl  implements UserService {
-    public static final String  COMPANY_ID="companyId";
-    public static final String  DEPARTMENT_ID="departmentId";
-    public static final String  HAS_DEPT="hasDept";
+public class UserServiceImpl implements UserService {
+    private static final String COMPANY_ID = "companyId";
+    private static final String DEPARTMENT_ID = "departmentId";
+    private static final String HAS_DEPT = "hasDept";
+    private static final String IN_SERVICE_STATUS = "inServiceStatus";
+    private static final String FIND_ALL_FLAG = "3";
     private IdWorker idWorker;
 
     private UserDao userDao;
@@ -80,25 +82,30 @@ public class UserServiceImpl  implements UserService {
         String page = String.valueOf(map.get("page"));
         String size = String.valueOf(map.get("size"));
         Specification<User> specification = (root, criteriaQuery, criteriaBuilder) -> {
-            List<Predicate> list = new ArrayList<>(3);
+            List<Predicate> list = new ArrayList<>(10);
             map.forEach((k, v) -> {
                 if (COMPANY_ID.equals(k)) {
-                    list.add(criteriaBuilder.equal(root.get("companyId").as(String.class), v));
+                    list.add(criteriaBuilder.equal(root.get(COMPANY_ID).as(String.class), v));
                 }
                 if (DEPARTMENT_ID.equals(k)) {
-                    list.add(criteriaBuilder.equal(root.get("departmentId").as(String.class), v));
+                    list.add(criteriaBuilder.equal(root.get(DEPARTMENT_ID).as(String.class), v));
                 }
                 if (HAS_DEPT.equals(k)) {
                     if ("0".equals(v)) {
-                        list.add(criteriaBuilder.isNull(root.get("departmentId")));
+                        list.add(criteriaBuilder.isNull(root.get(DEPARTMENT_ID)));
                     } else {
-                        list.add(criteriaBuilder.isNotNull(root.get("departmentId")));
+                        list.add(criteriaBuilder.isNotNull(root.get(DEPARTMENT_ID)));
+                    }
+                }
+                if (IN_SERVICE_STATUS.equals(k)) {
+                    if (!FIND_ALL_FLAG.equals(v)) {
+                        list.add(criteriaBuilder.equal(root.get(IN_SERVICE_STATUS).as(String.class), v));
                     }
                 }
             });
             return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
         };
-        return userDao.findAll(specification, PageRequest.of(Integer.parseInt(page)-1, Integer.parseInt(size)));
+        return userDao.findAll(specification, PageRequest.of(Integer.parseInt(page) - 1, Integer.parseInt(size)));
     }
 
     @Override

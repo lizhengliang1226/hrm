@@ -18,31 +18,31 @@ public interface UserService {
      * 保存用户
      * @param department
      */
-    public void save(User department);
+    void save(User department);
 
     /**
      * 更新用户
      * @param department
      */
-    public void update(User department);
+    void update(User department);
 
     /**
      * 查找用户
      * @param id
      * @return
      */
-    public User findById(String id);
+    User findById(String id);
 
     /**
      * 查找用户列表
      * @param map
      * @return
      */
-    public Page<User> findAll(Map<String,Object> map);
+    Page<User> findAll(Map<String, Object> map);
 
     /**
      * 删除用户
      * @param id
      */
-    public void deleteById(String id);
+    void deleteById(String id);
 }

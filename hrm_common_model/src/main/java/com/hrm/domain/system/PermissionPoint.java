@@ -26,7 +26,7 @@ public class PermissionPoint implements Serializable {
     @ApiModelProperty("ID")
     private String id;
 
-    @ApiModelProperty("按钮类型")
+    @ApiModelProperty("按钮样式")
     private String pointClass;
 
     @ApiModelProperty("按钮icon")

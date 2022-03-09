@@ -1,5 +1,7 @@
 package com.hrm.system.service.impl;
 
+import antlr.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import com.hrm.common.service.BaseService;
 import com.hrm.common.utils.IdWorker;
 import com.hrm.domain.system.Role;
@@ -8,8 +10,13 @@ import com.hrm.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.Map;
 
@@ -55,7 +62,11 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     public Page<Role> findSearch(Map<String, Object> map) {
         String page = String.valueOf(map.get("page"));
         String size = String.valueOf(map.get("size"));
-        return roleDao.findAll(getSpec(String.valueOf(map.get("companyId"))),
+        Specification<Role> specification = (root, criteriaQuery, criteriaBuilder) ->
+                StrUtil.isNotEmpty((CharSequence) map.get("name")) ?
+                        criteriaBuilder.like(root.get("name").as(String.class), "%"+map.get("name")+"%")
+                        : null;
+        return roleDao.findAll( specification.and(getSpec(String.valueOf(map.get("companyId")))),
                     PageRequest.of(Integer.parseInt(page) - 1, Integer.parseInt(size)));
     }
 

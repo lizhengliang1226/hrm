@@ -18,7 +18,7 @@ import java.util.Set;
  * @author 17314
  */
 @Entity
-@Table(name = "pe_user")
+@Table(name = "bs_user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -83,6 +83,12 @@ public class User implements Serializable {
 
     @ApiModelProperty("在职状态 1.在职  2.离职")
     private Integer inServiceStatus;
+
+    @ApiModelProperty("用户级别 saasAdmin,user")
+    private String level;
+
+    @ApiModelProperty("员工照片")
+    private String staffPhoto;
 
     @ManyToMany
     @JsonIgnore

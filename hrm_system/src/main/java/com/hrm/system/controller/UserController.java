@@ -38,6 +38,8 @@ public class UserController extends BaseController {
         //设置保存的企业id，目前使用固定值1，以后会解决
         user.setCompanyId(companyId);
         user.setCompanyName(companyName);
+        //默认在职
+        user.setInServiceStatus(1);
         userService.save(user);
         return Result.SUCCESS();
     }
@@ -69,6 +71,7 @@ public class UserController extends BaseController {
     public Result findAll(@RequestParam Map map) {
         //暂时都用1企业，之后会改
         map.put("companyId",companyId);
+        System.out.println(map);
         final Page<User> all = userService.findAll(map);
         final PageResult<User> pageResult = new PageResult( all.getTotalElements(),all.getContent());
         return new Result<>(ResultCode.SUCCESS, pageResult);
