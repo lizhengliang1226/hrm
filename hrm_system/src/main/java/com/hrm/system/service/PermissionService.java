@@ -42,6 +42,7 @@ public interface PermissionService {
     /**
      * 删除权限
      * @param id
+     * @throws CommonException
      */
     void deleteById(String id) throws CommonException;
 }

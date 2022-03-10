@@ -1,35 +1,30 @@
-package com.hrm.domain.system;
+package com.hrm.domain.system.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hrm.domain.system.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
- * 用户实体类
- * @author 17314
+ * @Description
+ * @Author LZL
+ * @Date 2022/3/11-6:33
  */
-@Entity
-@Table(name = "bs_user")
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@DynamicInsert()
-@DynamicUpdate()
-@ApiModel("用户实体类")
-public class User implements Serializable {
+@ApiModel("用户返回结果实体")
+public class UserResult implements Serializable {
     private static final long serialVersionUID = 4297464181093070302L;
 
-    @Id
     @ApiModelProperty("ID")
     private String id;
 
@@ -90,12 +85,12 @@ public class User implements Serializable {
 
     @ApiModelProperty("员工照片")
     private String staffPhoto;
-
-    @ManyToMany()
-    @JsonIgnore
-    @JoinTable(name="pe_user_role",joinColumns={@JoinColumn(name="user_id",referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="role_id",referencedColumnName="id")}
-    )
-    @ApiModelProperty("用户包含的角色-多对多")
-    private Set<Role> roles = new HashSet<Role>();
+    @ApiModelProperty("角色id数组")
+    private List<String> roleIds=new ArrayList<>();
+    public UserResult(User user){
+        BeanUtils.copyProperties(user,this);
+        user.getRoles().forEach(role -> {
+           roleIds.add(role.getId());
+        });
+    }
 }

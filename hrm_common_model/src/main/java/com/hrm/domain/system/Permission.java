@@ -16,7 +16,8 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "pe_permission")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicInsert()

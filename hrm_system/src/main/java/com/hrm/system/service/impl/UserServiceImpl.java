@@ -1,26 +1,19 @@
 package com.hrm.system.service.impl;
 
-import com.hrm.common.service.BaseService;
 import com.hrm.common.utils.IdWorker;
-
+import com.hrm.domain.system.Role;
 import com.hrm.domain.system.User;
+import com.hrm.system.dao.RoleDao;
 import com.hrm.system.dao.UserDao;
 import com.hrm.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description
@@ -37,6 +30,11 @@ public class UserServiceImpl implements UserService {
     private IdWorker idWorker;
 
     private UserDao userDao;
+    private RoleDao roleDao;
+    @Autowired
+    public void setRoleDao(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
 
     @Autowired
     public void setUserDao(UserDao userDao) {
@@ -111,5 +109,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(String id) {
         userDao.deleteById(id);
+    }
+
+    @Override
+    public void assignRoles(String id, List<String> roles) {
+  User user = userDao.findById(id).get();
+        Set<Role> roleSet=new HashSet<>();
+        roles.forEach(roleId->{
+            final Role role = roleDao.findById(roleId).get();
+            roleSet.add(role);
+        });
+        user.setRoles(roleSet);
+        userDao.save(user);
     }
 }

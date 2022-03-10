@@ -12,3 +12,6 @@ spring:
     database: MySQL
     show-sql: true
     open-in-view: true
+  http:
+    encoding:
+      force-response: true

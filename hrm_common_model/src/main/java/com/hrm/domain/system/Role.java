@@ -18,7 +18,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "pe_role")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicInsert()

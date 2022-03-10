@@ -5,6 +5,7 @@ import com.hrm.common.entity.PageResult;
 import com.hrm.common.entity.Result;
 import com.hrm.common.entity.ResultCode;
 import com.hrm.domain.system.Role;
+import com.hrm.domain.system.response.RoleResult;
 import com.hrm.system.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,18 +61,34 @@ public class RoleController extends BaseController {
     @GetMapping("role/{id}")
     @ApiOperation(value = "根据ID查找角色")
     public Result findById(@PathVariable(value = "id") String id) {
-        return new Result<>(ResultCode.SUCCESS, roleService.findById(id));
+        final Role byId = roleService.findById(id);
+        RoleResult roleResult=new RoleResult(byId);
+        return new Result<>(ResultCode.SUCCESS, roleResult);
     }
 
     @GetMapping("role")
-    @ApiOperation(value = "获取某个企业的角色列表")
-    public Result findAll(@RequestParam Map map) {
-        System.out.println("hshad");
+    @ApiOperation(value = "带分页获取某个企业的角色列表")
+    public Result findSearch(@RequestParam Map map) {
         //暂时都用1企业，之后会改
         map.put("companyId",companyId);
         System.out.println(map);
         final Page<Role> all = roleService.findSearch(map);
         final PageResult<Role> pageResult = new PageResult( all.getTotalElements(),all.getContent());
         return new Result<>(ResultCode.SUCCESS, pageResult);
+    }
+    @GetMapping("role/list")
+    @ApiOperation(value = "获取某个企业的全部角色列表")
+    public Result findAll(@RequestParam Map map) {
+        //暂时都用1企业，之后会改
+        map.put("companyId",companyId);
+        return new Result<>(ResultCode.SUCCESS,  roleService.findAll(map));
+    }
+    @PutMapping("role/assignPerm")
+    @ApiOperation(value = "给角色分配权限")
+    public Result assignPerms(@RequestBody Map map) {
+        String  id = (String) map.get("id");
+        List<String> permissions = (List<String>) map.get("permIds");
+        roleService.assignPerms(id, permissions);
+        return Result.SUCCESS();
     }
 }

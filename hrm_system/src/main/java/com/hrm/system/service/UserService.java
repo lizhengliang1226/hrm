@@ -45,4 +45,11 @@ public interface UserService {
      * @param id
      */
     void deleteById(String id);
+
+    /**
+     * 给用户分配角色
+     * @param id
+     * @param roles
+     */
+    void assignRoles(String id, List<String> roles);
 }

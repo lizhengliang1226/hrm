@@ -4,8 +4,11 @@ import antlr.StringUtils;
 import cn.hutool.core.util.StrUtil;
 import com.hrm.common.service.BaseService;
 import com.hrm.common.utils.IdWorker;
+import com.hrm.common.utils.PermissionConstants;
+import com.hrm.domain.system.Permission;
 import com.hrm.domain.system.Role;
-import com.hrm.system.dao.RoleDao;
+import com.hrm.domain.system.User;
+import com.hrm.system.dao.*;
 import com.hrm.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +20,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description
@@ -29,6 +31,13 @@ import java.util.Map;
 public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     private IdWorker idWorker;
     private RoleDao roleDao;
+    private PermissionDao permissionDao;
+
+    @Autowired
+    public void setPermissionDao(PermissionDao permissionDao) {
+        this.permissionDao = permissionDao;
+    }
+
     @Autowired
     public void setIdWorker(IdWorker idWorker) {
         this.idWorker = idWorker;
@@ -71,7 +80,31 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     }
 
     @Override
+    public List<Role> findAll(Map<String, Object> map) {
+        return roleDao.findAll( getSpec(String.valueOf(map.get("companyId"))));
+    }
+
+    @Override
     public void deleteById(String id) {
         roleDao.deleteById(id);
+    }
+
+    @Override
+    public void assignPerms(String id, List<String> permissions) {
+         Role role = roleDao.findById(id).get();
+         Set<Permission> perms=new HashSet<>();
+        permissions.forEach(permId->{
+            // 可能是菜单。按钮，api权限中的一个，不知道
+             Permission permission = permissionDao.findById(permId).get();
+             //只有当权限是按钮的时候才能够查出来值，添加菜单权限的时候
+            // 菜单下面是没有API类型的权限的，因此什么也查不到，不会影响
+            final List<Permission> apiList = permissionDao.findByTypeAndPid(PermissionConstants.PY_API, permission.getId());
+            //添加api权限
+            perms.addAll(apiList);
+            //添加顶级权限,可能是按钮，也可能是菜单
+            perms.add(permission);
+        });
+        role.setPermissions(perms);
+        roleDao.save(role);
     }
 }

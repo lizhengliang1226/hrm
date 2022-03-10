@@ -78,6 +78,7 @@ public class PermissionServiceImpl implements PermissionService {
         Permission permission = BeanMapUtils.mapToBean(map, Permission.class);
         permission.setId(id);
         final Integer type = permission.getType();
+        //保存时判断类型的目的是构建权限的详细信息，这些信息保存在另外三张表里
         switch (type) {
             case PermissionConstants.PY_MENU:
                 PermissionMenu permissionMenu = BeanMapUtils.mapToBean(map, PermissionMenu.class);
@@ -169,6 +170,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public List<Permission> findAll(Map<String, Object> map) {
+        System.out.println(map);
         Specification<Permission> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>(10);
             map.forEach((k, v) -> {
@@ -183,8 +185,9 @@ public class PermissionServiceImpl implements PermissionService {
                     if (QUERY_FLAG.equals(v)) {
                         in.value(1).value(2);
                     } else {
-                        in.value(v);
+                        in.value(Integer.parseInt((String) v));
                     }
+                    list.add(in);
                 }
 
             });

@@ -69,6 +69,6 @@ public class PermissionController extends BaseController {
     @ApiOperation(value = "获取某个企业的权限列表")
     public Result findAll(@RequestParam Map map) {
         final List<Permission> all = permissionService.findAll(map);
-        return new Result<>(ResultCode.SUCCESS);
+        return new Result<>(ResultCode.SUCCESS,all);
     }
 }
