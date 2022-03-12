@@ -25,12 +25,6 @@ public class CompanyApplication {
     public IdWorker getIdWorker() {
         return new IdWorker();
     }
-//    @Bean
-//    public JwtUtils getJwtUtils2() {
-//        final JwtUtils jwtUtils = new JwtUtils();
-//        System.out.println("这是企业微服务的util");
-//        System.out.println(jwtUtils);
-//        return jwtUtils;
-//    }
+
 
 }

@@ -28,14 +28,14 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    @PostMapping()
+    @PostMapping(name="SAVE_COMPANY_API")
     @ApiOperation(value = "保存企业")
     public Result save(@RequestBody Company company) {
         companyService.add(company);
         return Result.SUCCESS();
     }
 
-    @PutMapping("{id}")
+    @PutMapping(value = "{id}",name="UPDATE_COMPANY_API")
     @ApiOperation(value = "更新企业")
     public Result update(@PathVariable(value = "id") String id, @RequestBody Company company) {
         company.setId(id);
@@ -43,14 +43,14 @@ public class CompanyController {
         return Result.SUCCESS();
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(value = "{id}",name="DELETE_COMPANY_API")
     @ApiOperation(value = "根据id删除企业")
     public Result delete(@PathVariable(value = "id") String id) {
          companyService.delete(id);
         return Result.SUCCESS();
     }
 
-    @GetMapping("{id}")
+    @GetMapping(value = "{id}",name="FIND_COMPANY_API")
     @ApiOperation(value = "根据ID查找企业")
     public Result findById(@PathVariable(value = "id") String id) {
         final Company company = companyService.findById(id);
@@ -59,7 +59,7 @@ public class CompanyController {
         return result;
     }
 
-    @GetMapping()
+    @GetMapping(name="FIND_COMPANY_LIST_API")
     @ApiOperation(value = "获取企业列表")
     public Result findAll() {
         final List<Company> all = companyService.findAll();

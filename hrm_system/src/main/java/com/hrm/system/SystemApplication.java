@@ -28,13 +28,6 @@ public class SystemApplication {
         return new IdWorker();
     }
 
-//    @Bean()
-//    public JwtUtils getJwtUtils1() {
-//        final JwtUtils jwtUtils = new JwtUtils();
-//        System.out.println("这是系统微服务的util");
-//        System.out.println(jwtUtils);
-//        return jwtUtils;
-//    }
 
     /**
      * 解决no session问题

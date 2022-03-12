@@ -13,14 +13,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @Author LZL
  * @Date 2022/1/12-10:03
  */
-@SpringBootTest
-@RunWith(SpringJUnit4ClassRunner.class)
+
 public class CompanyDaoTest {
-    @Autowired
-    private CompanyDao companyDao;
     @Test
     public void test(){
-        final Company company = companyDao.findById("12345").get();
-        System.out.println(company.toString());
+
     }
 }

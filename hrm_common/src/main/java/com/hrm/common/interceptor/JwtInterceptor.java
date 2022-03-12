@@ -28,7 +28,10 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
     private JwtUtils jwtUtil;
     private static final String BEARER="Bearer";
-
+    /**
+     * 获取登录信息的请求路径
+     */
+    private static final String LOGIN_INFO_PATH = "/sys/profile";
     @Autowired
     public void setJwtUtil(JwtUtils jwtUtil) {
         this.jwtUtil = jwtUtil;
@@ -36,23 +39,34 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 从请求头获取token
         final String authorization = request.getHeader("Authorization");
         if (!StrUtil.isBlank(authorization) && authorization.startsWith(BEARER)) {
             String token = authorization.replace("Bearer ", "");
+            // 转化token
             final Claims claims = jwtUtil.parseToken(token);
             if (claims != null) {
+                // 如果路径是获取用户信息路径，则设置claims直接放行
+                if(LOGIN_INFO_PATH.equals(request.getRequestURI())){
+                    request.setAttribute("userClaims", claims);
+                    return true;
+                }
                 String apis = (String) claims.get("apis");
                 HandlerMethod h = (HandlerMethod) handler;
+                // 获取请求方法的权限码
                 final String permCode = getPermCode(h);
                 if(permCode != null){
+                    // 判断当前用户是否有这个方法的访问权限
                     if (apis.contains(permCode)) {
                         request.setAttribute("userClaims", claims);
                         return true;
                     }else{
-                        throw new CommonException(ResultCode.UNAUTHORISE);
+                        throw new CommonException(ResultCode.UNAUTHORIZED);
                     }
                 }
                 throw new CommonException(ResultCode.SERVER_ERROR);
+                // request.setAttribute("userClaims", claims);
+                // return true;
             }
         }
         throw new CommonException(ResultCode.UNAUTHENTICATED);

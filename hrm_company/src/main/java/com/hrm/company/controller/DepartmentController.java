@@ -38,7 +38,7 @@ public class DepartmentController extends BaseController {
         this.departmentService = departmentService;
     }
 
-    @PostMapping("department")
+    @PostMapping(value="department",name="SAVE_DEPT_API")
     @ApiOperation(value = "保存部门")
     public Result save(@RequestBody Department department) {
         //设置保存的企业id，目前使用固定值1，以后会解决
@@ -47,7 +47,7 @@ public class DepartmentController extends BaseController {
         return Result.SUCCESS();
     }
 
-    @PutMapping("department/{id}")
+    @PutMapping(value="department/{id}",name="UPDATE_DEPT_API")
     @ApiOperation(value = "更新部门")
     public Result update(@PathVariable(value = "id") String id, @RequestBody Department department) {
         department.setId(id);
@@ -55,27 +55,26 @@ public class DepartmentController extends BaseController {
         return Result.SUCCESS();
     }
 
-    @DeleteMapping("department/{id}")
+    @DeleteMapping(value="department/{id}",name="DELETE_DEPT_API")
     @ApiOperation(value = "根据id删除部门")
     public Result delete(@PathVariable(value = "id") String id) {
         departmentService.deleteById(id);
         return Result.SUCCESS();
     }
 
-    @GetMapping("department/{id}")
+    @GetMapping(value="department/{id}",name="FIND_DEPT_API")
     @ApiOperation(value = "根据ID查找部门")
     public Result findById(@PathVariable(value = "id") String id) {
         final Department byId = departmentService.findById(id);
         return new Result<>(ResultCode.SUCCESS, byId);
     }
 
-    @GetMapping("department")
+    @GetMapping(value="department",name = "FIND_DEPT_LIST_API")
     @ApiOperation(value = "获取某个企业的部门列表")
     public Result findAll() {
         //暂时都用1企业，之后会改
         final List<Department> all = departmentService.findAll(companyId);
         DeptListResult deptListResult = new DeptListResult(companyService.findById(companyId), all);
-        System.out.println(deptListResult);
         return new Result<>(ResultCode.SUCCESS, deptListResult);
     }
 }

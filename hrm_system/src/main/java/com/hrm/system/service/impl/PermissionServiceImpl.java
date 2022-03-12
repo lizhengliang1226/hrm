@@ -170,7 +170,6 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public List<Permission> findAll(Map<String, Object> map) {
-        System.out.println(map);
         Specification<Permission> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>(10);
             map.forEach((k, v) -> {
