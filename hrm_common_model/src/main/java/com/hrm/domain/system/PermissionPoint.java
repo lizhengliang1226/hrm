@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 /**
  * Description: 菜单权限实体类
+ *
  * @author 17314
  */
 @Entity

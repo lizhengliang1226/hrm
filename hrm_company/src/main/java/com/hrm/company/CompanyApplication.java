@@ -1,9 +1,12 @@
 package com.hrm.company;
 
 import com.hrm.common.utils.IdWorker;
+import com.hrm.common.utils.JwtUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -22,5 +25,12 @@ public class CompanyApplication {
     public IdWorker getIdWorker() {
         return new IdWorker();
     }
+//    @Bean
+//    public JwtUtils getJwtUtils2() {
+//        final JwtUtils jwtUtils = new JwtUtils();
+//        System.out.println("这是企业微服务的util");
+//        System.out.println(jwtUtils);
+//        return jwtUtils;
+//    }
 
 }

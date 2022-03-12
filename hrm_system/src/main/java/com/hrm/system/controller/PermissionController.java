@@ -1,7 +1,6 @@
 package com.hrm.system.controller;
 
 
-
 import com.hrm.common.controller.BaseController;
 import com.hrm.common.entity.PageResult;
 import com.hrm.common.entity.Result;
@@ -38,15 +37,15 @@ public class PermissionController extends BaseController {
 
     @PostMapping("permission")
     @ApiOperation(value = "保存权限")
-    public Result save(@RequestBody Map<String,Object> map) throws Exception {
+    public Result save(@RequestBody Map<String, Object> map) throws Exception {
         permissionService.save(map);
         return Result.SUCCESS();
     }
 
     @PutMapping("permission/{id}")
     @ApiOperation(value = "更新权限")
-    public Result update(@PathVariable(value = "id") String id, @RequestBody Map<String,Object> map) throws Exception {
-        map.put("id",id);
+    public Result update(@PathVariable(value = "id") String id, @RequestBody Map<String, Object> map) throws Exception {
+        map.put("id", id);
         permissionService.update(map);
         return Result.SUCCESS();
     }
@@ -61,14 +60,14 @@ public class PermissionController extends BaseController {
     @GetMapping("permission/{id}")
     @ApiOperation(value = "根据ID查找权限")
     public Result findById(@PathVariable(value = "id") String id) throws CommonException {
-        Map map=permissionService.findById(id);
-        return new Result<>(ResultCode.SUCCESS,map);
+        Map map = permissionService.findById(id);
+        return new Result<>(ResultCode.SUCCESS, map);
     }
 
     @GetMapping("permission")
     @ApiOperation(value = "获取某个企业的权限列表")
     public Result findAll(@RequestParam Map map) {
         final List<Permission> all = permissionService.findAll(map);
-        return new Result<>(ResultCode.SUCCESS,all);
+        return new Result<>(ResultCode.SUCCESS, all);
     }
 }

@@ -35,10 +35,10 @@ import java.util.Map;
 @Service
 public class PermissionServiceImpl implements PermissionService {
     private static final long serialVersionUID = 1L;
-    private static final String PID="pid";
-    private static final String EN_VISIBLE="enVisible";
-    private static final String TYPE="type";
-    private static final String QUERY_FLAG="0";
+    private static final String PID = "pid";
+    private static final String EN_VISIBLE = "enVisible";
+    private static final String TYPE = "type";
+    private static final String QUERY_FLAG = "0";
 
     private IdWorker idWorker;
     private PermissionDao permissionDao;
@@ -138,25 +138,25 @@ public class PermissionServiceImpl implements PermissionService {
     public Map findById(String id) throws CommonException {
         Permission permission = permissionDao.findById(id).get();
         Object obj;
-        if(permission.getType()==PermissionConstants.PY_MENU){
-        obj = permissionMenuDao.findById(id).get();
+        if (permission.getType() == PermissionConstants.PY_MENU) {
+            obj = permissionMenuDao.findById(id).get();
 
-        }else if(permission.getType()==PermissionConstants.PY_POINT){
-        obj = permissionPointDao.findById(id).get();
+        } else if (permission.getType() == PermissionConstants.PY_POINT) {
+            obj = permissionPointDao.findById(id).get();
 
-        }else   if(permission.getType()==PermissionConstants.PY_API){
-        obj = permissionApiDao.findById(id).get();
+        } else if (permission.getType() == PermissionConstants.PY_API) {
+            obj = permissionApiDao.findById(id).get();
 
-        }else{
+        } else {
             throw new CommonException(ResultCode.FAIL);
         }
         final Map<String, Object> map1 = BeanMapUtils.beanToMap(obj);
-        map1.put("name",permission.getName());
-        map1.put("type",permission.getType());
-        map1.put("code",permission.getCode());
-        map1.put("description",permission.getDescription());
-        map1.put("pid",permission.getPid());
-        map1.put("enVisible",permission.getEnVisible());
+        map1.put("name", permission.getName());
+        map1.put("type", permission.getType());
+        map1.put("code", permission.getCode());
+        map1.put("description", permission.getDescription());
+        map1.put("pid", permission.getPid());
+        map1.put("enVisible", permission.getEnVisible());
         return map1;
     }
 
@@ -202,13 +202,13 @@ public class PermissionServiceImpl implements PermissionService {
         final Integer type = permission.getType();
         switch (type) {
             case PermissionConstants.PY_MENU:
-              permissionMenuDao.deleteById(id);
+                permissionMenuDao.deleteById(id);
                 break;
             case PermissionConstants.PY_API:
-              permissionApiDao.deleteById(id);
+                permissionApiDao.deleteById(id);
                 break;
             case PermissionConstants.PY_POINT:
-              permissionPointDao.deleteById(id);
+                permissionPointDao.deleteById(id);
                 break;
             default:
                 throw new CommonException(ResultCode.FAIL);

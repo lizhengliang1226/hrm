@@ -1,12 +1,14 @@
 package com.hrm.system;
 
 import com.hrm.common.utils.IdWorker;
+import com.hrm.common.utils.JwtUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 
 /**
  * @Description
@@ -25,4 +27,22 @@ public class SystemApplication {
     public IdWorker getIdWorker() {
         return new IdWorker();
     }
+
+//    @Bean()
+//    public JwtUtils getJwtUtils1() {
+//        final JwtUtils jwtUtils = new JwtUtils();
+//        System.out.println("这是系统微服务的util");
+//        System.out.println(jwtUtils);
+//        return jwtUtils;
+//    }
+
+    /**
+     * 解决no session问题
+     * @return
+     */
+    @Bean
+    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter(){
+        return new OpenEntityManagerInViewFilter();
+    }
+
 }

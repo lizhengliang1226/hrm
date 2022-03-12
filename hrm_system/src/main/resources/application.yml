@@ -15,3 +15,7 @@ spring:
   http:
     encoding:
       force-response: true
+jwt:
+  config:
+    key: hrm-key # jwt鉴权的key
+    ttl: 36000000  # 过期时间

@@ -41,16 +41,16 @@ public class Role implements Serializable {
     private String companyId;
 
     @JsonIgnore
-    @ManyToMany(mappedBy="roles")
+    @ManyToMany(mappedBy = "roles")
     @ApiModelProperty("角色包含的用户   多对多")
     private Set<User> users = new HashSet<User>(0);
 
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name="pe_role_permission",
-            joinColumns={@JoinColumn(name="role_id",referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="permission_id",referencedColumnName="id")})
+    @JoinTable(name = "pe_role_permission",
+            joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id", referencedColumnName = "id")})
     @ApiModelProperty("角色包含的模块  多对多")
     private Set<Permission> permissions = new HashSet<Permission>(0);
 }

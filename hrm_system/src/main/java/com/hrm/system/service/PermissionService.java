@@ -15,18 +15,21 @@ import java.util.Map;
 public interface PermissionService {
     /**
      * 保存权限
+     *
      * @param map
      */
-    void save(Map<String,Object> map) throws Exception;
+    void save(Map<String, Object> map) throws Exception;
 
     /**
      * 更新权限
+     *
      * @param map
      */
-    void update(Map<String,Object> map) throws Exception;
+    void update(Map<String, Object> map) throws Exception;
 
     /**
      * 查找权限
+     *
      * @param id
      * @return
      */
@@ -34,6 +37,7 @@ public interface PermissionService {
 
     /**
      * 查找权限列表
+     *
      * @param map
      * @return
      */
@@ -41,6 +45,7 @@ public interface PermissionService {
 
     /**
      * 删除权限
+     *
      * @param id
      * @throws CommonException
      */

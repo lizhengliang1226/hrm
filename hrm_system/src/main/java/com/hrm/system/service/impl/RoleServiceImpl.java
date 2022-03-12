@@ -42,6 +42,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     public void setIdWorker(IdWorker idWorker) {
         this.idWorker = idWorker;
     }
+
     @Autowired
     public void setRoleDao(RoleDao roleDao) {
         this.roleDao = roleDao;
@@ -73,15 +74,15 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
         String size = String.valueOf(map.get("size"));
         Specification<Role> specification = (root, criteriaQuery, criteriaBuilder) ->
                 StrUtil.isNotEmpty((CharSequence) map.get("name")) ?
-                        criteriaBuilder.like(root.get("name").as(String.class), "%"+map.get("name")+"%")
+                        criteriaBuilder.like(root.get("name").as(String.class), "%" + map.get("name") + "%")
                         : null;
-        return roleDao.findAll( specification.and(getSpec(String.valueOf(map.get("companyId")))),
-                    PageRequest.of(Integer.parseInt(page) - 1, Integer.parseInt(size)));
+        return roleDao.findAll(specification.and(getSpec(String.valueOf(map.get("companyId")))),
+                PageRequest.of(Integer.parseInt(page) - 1, Integer.parseInt(size)));
     }
 
     @Override
     public List<Role> findAll(Map<String, Object> map) {
-        return roleDao.findAll( getSpec(String.valueOf(map.get("companyId"))));
+        return roleDao.findAll(getSpec(String.valueOf(map.get("companyId"))));
     }
 
     @Override
@@ -91,12 +92,12 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     public void assignPerms(String id, List<String> permissions) {
-         Role role = roleDao.findById(id).get();
-         Set<Permission> perms=new HashSet<>();
-        permissions.forEach(permId->{
+        Role role = roleDao.findById(id).get();
+        Set<Permission> perms = new HashSet<>();
+        permissions.forEach(permId -> {
             // 可能是菜单。按钮，api权限中的一个，不知道
-             Permission permission = permissionDao.findById(permId).get();
-             //只有当权限是按钮的时候才能够查出来值，添加菜单权限的时候
+            Permission permission = permissionDao.findById(permId).get();
+            //只有当权限是按钮的时候才能够查出来值，添加菜单权限的时候
             // 菜单下面是没有API类型的权限的，因此什么也查不到，不会影响
             final List<Permission> apiList = permissionDao.findByTypeAndPid(PermissionConstants.PY_API, permission.getId());
             //添加api权限

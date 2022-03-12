@@ -40,12 +40,12 @@ public class RoleResult implements Serializable {
     private String companyId;
 
     @ApiModelProperty("权限id数组")
-    private List<String> permIds=new ArrayList<>();
+    private List<String> permIds = new ArrayList<>();
 
-    public RoleResult(Role role){
-        BeanUtils.copyProperties(role,this);
+    public RoleResult(Role role) {
+        BeanUtils.copyProperties(role, this);
         role.getPermissions().forEach(perm -> {
-           permIds.add(perm.getId());
+            permIds.add(perm.getId());
         });
     }
 }

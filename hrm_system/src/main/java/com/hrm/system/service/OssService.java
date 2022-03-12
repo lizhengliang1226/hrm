@@ -10,7 +10,8 @@ import java.util.Map;
 public interface OssService {
     /**
      * OSS云存储的后端签名接口
+     *
      * @return
      */
-    Map<String,String> policy();
+    Map<String, String> policy();
 }

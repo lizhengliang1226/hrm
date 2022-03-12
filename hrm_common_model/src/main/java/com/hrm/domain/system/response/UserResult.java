@@ -86,11 +86,12 @@ public class UserResult implements Serializable {
     @ApiModelProperty("员工照片")
     private String staffPhoto;
     @ApiModelProperty("角色id数组")
-    private List<String> roleIds=new ArrayList<>();
-    public UserResult(User user){
-        BeanUtils.copyProperties(user,this);
+    private List<String> roleIds = new ArrayList<>();
+
+    public UserResult(User user) {
+        BeanUtils.copyProperties(user, this);
         user.getRoles().forEach(role -> {
-           roleIds.add(role.getId());
+            roleIds.add(role.getId());
         });
     }
 }

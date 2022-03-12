@@ -24,6 +24,7 @@ import java.util.UUID;
  */
 @Service
 public class OssServiceImpl implements OssService {
+
     @Value("${accessId}")
     private String accessId;
     @Value("${accessKeySecret}")
@@ -34,11 +35,12 @@ public class OssServiceImpl implements OssService {
     private String bucket;
     @Value("${host}")
     private String host;
+
     @Override
     public Map<String, String> policy() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final String date = sdf.format(new Date());
-        String dir = date+"/"+ UUID.randomUUID().toString();
+        String dir = date + "/" + UUID.randomUUID().toString();
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessId, accessKeySecret);
         try {

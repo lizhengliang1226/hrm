@@ -14,18 +14,21 @@ import java.util.Map;
 public interface RoleService {
     /**
      * 保存角色
+     *
      * @param role
      */
     public void save(Role role);
 
     /**
      * 更新角色
+     *
      * @param role
      */
     public void update(Role role);
 
     /**
      * 查找角色
+     *
      * @param id
      * @return
      */
@@ -33,26 +36,30 @@ public interface RoleService {
 
     /**
      * 分页查找角色列表
+     *
      * @param map 查询条件的集合
      * @return
      */
-    public Page<Role> findSearch(Map<String,Object> map);
+    public Page<Role> findSearch(Map<String, Object> map);
 
     /**
      * 查找角色列表
+     *
      * @param map 查询条件的集合
      * @return
      */
-    public List<Role> findAll(Map<String,Object> map);
+    public List<Role> findAll(Map<String, Object> map);
 
     /**
      * 删除角色
+     *
      * @param id
      */
     public void deleteById(String id);
 
     /**
      * 为角色分配权限
+     *
      * @param id
      * @param permissions
      */

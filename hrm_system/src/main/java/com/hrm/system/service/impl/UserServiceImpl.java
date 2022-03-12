@@ -76,6 +76,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByMobile(String mobile) {
+        return userDao.findByMobile(mobile);
+    }
+
+    @Override
     public Page<User> findAll(Map<String, Object> map) {
         String page = String.valueOf(map.get("page"));
         String size = String.valueOf(map.get("size"));

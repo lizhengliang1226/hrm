@@ -2,6 +2,7 @@ package com.hrm.common.handler;
 
 import com.hrm.common.entity.Result;
 import com.hrm.common.entity.ResultCode;
+import com.hrm.common.exception.CommonException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +21,12 @@ public class BaseExceptionHandler {
     @ResponseBody
     public Result error(HttpServletRequest request, HttpServletResponse response,Exception e){
         e.printStackTrace();
-        Result result = new Result(ResultCode.SERVER_ERROR);
-        return result;
+        if(e.getClass() == CommonException.class) {
+            //类型转型
+            CommonException ce = (CommonException) e;
+            return new Result(ce.getResultCode());
+        }else{
+            return new Result(ResultCode.SERVER_ERROR);
+        }
     }
 }

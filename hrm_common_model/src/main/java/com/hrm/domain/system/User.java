@@ -15,6 +15,7 @@ import java.util.Set;
 
 /**
  * 用户实体类
+ *
  * @author 17314
  */
 @Entity
@@ -85,7 +86,7 @@ public class User implements Serializable {
     @ApiModelProperty("在职状态 1.在职  2.离职")
     private Integer inServiceStatus;
 
-    @ApiModelProperty("用户级别 saasAdmin,user")
+    @ApiModelProperty("用户级别 saasAdmin,coAdmin,user")
     private String level;
 
     @ApiModelProperty("员工照片")
@@ -93,8 +94,8 @@ public class User implements Serializable {
 
     @ManyToMany()
     @JsonIgnore
-    @JoinTable(name="pe_user_role",joinColumns={@JoinColumn(name="user_id",referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="role_id",referencedColumnName="id")}
+    @JoinTable(name = "pe_user_role", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     @ApiModelProperty("用户包含的角色-多对多")
     private Set<Role> roles = new HashSet<Role>();
